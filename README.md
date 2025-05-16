@@ -18,3 +18,9 @@
   {
     "post_id": 123
   }
+
+```
+### 3. Clear Cache
+
+- If you need to clear the cache, I have implemented a 'Clear Cache' page in the admin area. You can access it at:
+ - wp-admin/admin.php?page=popular-posts-api.

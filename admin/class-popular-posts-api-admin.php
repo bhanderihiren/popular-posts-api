@@ -100,4 +100,38 @@ class Popular_Posts_Api_Admin {
 
 	}
 
+	public function get_popular_posts_admin_menu() {
+	    add_menu_page(
+	        'Popular Posts Cache',
+	        'Popular Posts Cache',
+	        'manage_options',
+	        $this->plugin_name,
+	        array($this, 'render_clear_cache_page'),
+	        'dashicons-update',
+	        81
+	    );
+	}
+
+
+	function render_clear_cache_page() {
+	    if (isset($_POST['clear_popular_cache'])) {
+	        if (!current_user_can('manage_options') || !check_admin_referer('clear_popular_cache_action')) {
+	            wp_die('Unauthorized action');
+	        }
+
+	        delete_transient('popular_posts');
+	        echo '<div class="notice notice-success"><p>Popular posts cache cleared successfully!</p></div>';
+	    }
+
+	    ?>
+	    <div class="wrap">
+	        <h1>Clear Popular Posts Cache</h1>
+	        <form method="post">
+	            <?php wp_nonce_field('clear_popular_cache_action'); ?>
+	            <input type="submit" name="clear_popular_cache" class="button button-primary" value="Clear Cache Now">
+	        </form>
+	    </div>
+	    <?php
+	}
+
 }
